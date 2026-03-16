@@ -9,18 +9,25 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    env:
+      TEST_DB_URL: jdbc:postgresql://localhost:5432/logsense_test
+      TEST_DB_USERNAME: logsense
+      TEST_DB_PASSWORD: ${{ secrets.TEST_DB_PASSWORD }}
 
     services:
       postgres:
         image: postgres:16
         env:
           POSTGRES_DB: logsense_test
-          POSTGRES_USER: ${{ secrets.TEST_DB_USERNAME }}
+          POSTGRES_USER: logsense
           POSTGRES_PASSWORD: ${{ secrets.TEST_DB_PASSWORD }}
         ports:
-          - ${{ secrets.POSTGRES_PORT }}:5432
+          - 5432:5432
         options: >-
-          --health-cmd="pg_isready -U \"${{ secrets.TEST_DB_USERNAME }}\"" -d logsense_test"
+          --health-cmd="pg_isready -U logsense -d logsense_test"
           --health-interval=10s
           --health-timeout=5s
           --health-retries=5
@@ -44,7 +51,4 @@ jobs:
       - name: Build with Gradle Wrapper
         env:
           SPRING_PROFILES_ACTIVE: test
-          TEST_DB_URL: ${{ secrets.TEST_DB_URL }}
-          TEST_DB_USERNAME: ${{ secrets.TEST_DB_USERNAME }}
-          TEST_DB_PASSWORD: ${{ secrets.TEST_DB_PASSWORD }}
         run: ./gradlew clean build --no-daemon
