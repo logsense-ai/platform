@@ -1,10 +1,14 @@
 name: Java CI with Gradle
 
 on:
-  push:
-    branches: [ "chore/ci-update" ]
   pull_request:
-    branches: [ "main", "develop" ]
+    branches:
+      - develop
+      - main
+
+  push:
+    branches:
+      - develop
 
 jobs:
   build:
