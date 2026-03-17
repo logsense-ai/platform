@@ -1,0 +1,1 @@
+CREATE DATABASE logsense_test;
