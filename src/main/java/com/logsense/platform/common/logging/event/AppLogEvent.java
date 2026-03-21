@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @Builder
-public class LogEvent {
+public class AppLogEvent {
     private final String traceId;
     private final String logLevel;
     private final String loggerName;

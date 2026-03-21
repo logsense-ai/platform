@@ -1,6 +1,6 @@
 package com.logsense.platform.common.logging.service;
 
-import com.logsense.platform.common.logging.event.LogEvent;
+import com.logsense.platform.common.logging.event.AppLogEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
@@ -15,7 +15,7 @@ public class LogEventService {
 
     public void log(String logLevel, String loggerName, String message, String traceId) {
         publisher.publishEvent(
-                LogEvent.builder()
+                AppLogEvent.builder()
                         .traceId(traceId)
                         .logLevel(logLevel)
                         .loggerName(loggerName)
